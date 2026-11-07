@@ -20,8 +20,7 @@ jobs:
 
     - name: Install dev dependencies with uv
       run: |
-        uv sync --all-extras
-        uv sync --group types
+        uv sync --python 3.10 --all-groups --frozen
 
     - name: Linter
       run: |

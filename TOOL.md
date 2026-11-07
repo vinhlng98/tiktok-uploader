@@ -7,10 +7,10 @@ uses only `tiktok-tool`. Upstream: wkaisertexas/tiktok-uploader at
 
 ## Install and login
 
-Python 3.10+ and `uv`:
+Use Python 3.10 (the locally tested and CI-pinned version) and `uv`:
 
 ```sh
-uv sync --all-groups
+uv sync --python 3.10 --all-groups --frozen
 uv run playwright install chromium
 uv run tiktok-tool login --account YOUR_TIKTOK_USERNAME
 uv run tiktok-tool doctor --account YOUR_TIKTOK_USERNAME
