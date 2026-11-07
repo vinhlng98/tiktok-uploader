@@ -3,6 +3,14 @@
 </p>
 
 <h1 align="center"> ⬆️ TikTok Uploader </h1>
+
+> **vinhlng98 fork:** adds `tiktok-tool`, a separate verified Studio workflow
+> with mandatory AI labeling, product policy, durable duplicate protection,
+> schedule verification and optional verified file moves. Start with
+> **[TOOL.md](TOOL.md)**. The upstream CLI documented below remains unchanged.
+> Agent skill: [tiktok-product-link-post](skills/tiktok-product-link-post/SKILL.md).
+> Live TikTok compatibility must be validated after login; local tests do not
+> constitute a successful real-world upload.
 <p align="center">A <strong>Playwright</strong>-based automated <strong>TikTok</strong> video uploader</p>
 
 <p align="center">

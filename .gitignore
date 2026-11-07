@@ -138,3 +138,8 @@ dmypy.json
 .pyre/
 tests/system_test.py
 TODO.md
+.tiktok-tool/
+*.sqlite3
+*.sqlite3-*
+*.session.json
+plans/

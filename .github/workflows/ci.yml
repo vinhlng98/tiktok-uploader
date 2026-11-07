@@ -34,7 +34,12 @@ jobs:
       run: |
         uv run mypy .
 
+    - name: Install browser for local HTML contract tests
+      run: uv run playwright install --with-deps chromium
+
     - name: Run pytest with JUnit XML output
+      env:
+        TIKTOK_TOOL_BROWSER_TESTS: "1"
       run: |
         uv run pytest --junitxml=test-results.xml
 
