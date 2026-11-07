@@ -1,6 +1,14 @@
 #!/bin/sh
 set -eu
-script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+script_path=$0
+while [ -L "$script_path" ]; do
+  link_target=$(readlink "$script_path")
+  case "$link_target" in
+    /*) script_path=$link_target ;;
+    *) script_path=$(dirname -- "$script_path")/$link_target ;;
+  esac
+done
+script_dir=$(CDPATH= cd -- "$(dirname -- "$script_path")" && pwd)
 if [ -n "${TIKTOK_TOOL_PROJECT:-}" ]; then
   project=$TIKTOK_TOOL_PROJECT
 elif [ -f "$script_dir/../references/tool-project" ]; then

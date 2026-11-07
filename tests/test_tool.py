@@ -1,4 +1,7 @@
 import json
+import os
+import shutil
+import subprocess
 from datetime import datetime
 from pathlib import Path
 
@@ -216,3 +219,30 @@ def test_run_without_submit_never_opens_browser(tmp_path, plan, monkeypatch, cap
     )
     assert main() == 0
     assert json.loads(capsys.readouterr().out)["publishing"] is False
+
+
+def test_launcher_resolves_symlink_and_project_path_with_spaces(tmp_path):
+    project = tmp_path / "repo with spaces"
+    script = project / "skills/tiktok-product-link-post/scripts/tiktok_tool.sh"
+    script.parent.mkdir(parents=True)
+    original = (
+        Path(__file__).resolve().parents[1]
+        / "skills/tiktok-product-link-post/scripts/tiktok_tool.sh"
+    )
+    shutil.copy2(original, script)
+    python = project / ".venv/bin/python"
+    python.parent.mkdir(parents=True)
+    python.write_text('#!/bin/sh\nprintf "%s\\n" "$@"\n')
+    python.chmod(0o755)
+    link = tmp_path / "tiktok-tool"
+    link.symlink_to(script)
+    environment = dict(os.environ)
+    environment.pop("TIKTOK_TOOL_PROJECT", None)
+    result = subprocess.run(
+        [str(link), "--help"],
+        env=environment,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    assert result.stdout.splitlines() == ["-m", "tiktok_uploader.tool.cli", "--help"]

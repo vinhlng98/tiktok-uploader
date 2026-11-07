@@ -36,6 +36,11 @@ def main():
         shutil.copy2(original, target / relative)
     (target / "references/tool-project").write_text(str(project) + "\n")
     (target / "scripts/tiktok_tool.sh").chmod(0o755)
+    local_bin = Path.home() / ".local/bin"
+    local_bin.mkdir(parents=True, exist_ok=True)
+    command = local_bin / "tiktok-tool"
+    if not command.exists() and not command.is_symlink():
+        command.symlink_to(target / "scripts/tiktok_tool.sh")
     print(f"Installed skill: {target}")
     print(f"Tool project: {project}")
 
